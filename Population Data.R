@@ -118,8 +118,14 @@ Population_Characteristics = signif(data.frame('Control' = c(Sex$Control,Age$Con
                                     ,digits = 3)
 #rm(Sex,Age,Fracture_Location,Dominant_Hand,Operated_Hand,Operated_Finger,Bone_union, Population_Control,Population_Test,Complete_Pop_Con,Complete_Pop_Tes)
 #Export results
-write.csv2(Population_Characteristics,file = 'Population Characteristics.csv')
-write.csv2(Clavien_Dindo, file = '~/Université/Master thesis/Data/clavien-dindo.csv')
-View(Population_Characteristics)
-View(Clavien_Dindo)
-View(TEST_UNION)
+# write.csv2(Population_Characteristics,file = 'Population Characteristics.csv')
+# write.csv2(Clavien_Dindo, file = '~/Université/Master thesis/Data/clavien-dindo.csv')
+#View(Population_Characteristics) View(Clavien_Dindo) View(TEST_UNION)
+library(readxl)
+Data_compiled_Dates <- read_excel("~/Université/Master thesis/Data/Data_compiled.xlsx",sheet = 'Dates')
+Data_compiled_Dates <- Data_compiled_Dates[complete.cases(Data_compiled_Dates),]
+View(Data_compiled_Dates)
+Time_to_Followup <- difftime(Data_compiled_Dates$`Follow-up date`, Data_compiled_Dates$`OP Date`)
+Mean_Time <- mean(Time_to_Followup)
+Mean_Time <- (c(as.integer(Mean_Time/365.25),as.integer((Mean_Time/365-as.integer(Mean_Time/365.25))*12)))
+sd(Time_to_Followup)/30

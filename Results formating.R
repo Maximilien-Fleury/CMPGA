@@ -26,7 +26,7 @@ Strength_R_Finger_Raw = signif(ifelse(test = na.exclude(Results$`Dominant Hand`=
                         yes = Max_Strength_Finger_Non_Operated/Max_Strength_Finger_Operated,
                         no = Max_Strength_Finger_Operated/Max_Strength_Finger_Non_Operated),digits = 3)
 Strength_ratio_Finger = 1- abs(1-Strength_R_Finger_Raw)
-rm(Max_Strength_Finger_Non_Operated,Max_Strength_Finger_Operated)
+#rm(Max_Strength_Finger_Non_Operated,Max_Strength_Finger_Operated)
 
 #Calcul force mains
 
@@ -41,18 +41,23 @@ Strength_R_Raw_Hand = signif(ifelse(test = na.exclude(Results$`Dominant Hand`== 
                             no = Max_Strength_Hand_Operated/Max_Strength_Hand_Non_Operated),digits = 3)
 Strength_Ratio_Hand = 1- abs(1-Strength_R_Raw_Hand)
 
-rm(Max_Strength_Hand_Non_Operated,Max_Strength_Hand_Operated)
 
 #Complier Résultats
 Formated_results = data.frame('Patient_N°' = Results$`Patient N°`,
                               'QuickDASH'= Results$QuickDASH,
-                              'TJROM'= Results$TJROM, Operational_Pain,Strength_ratio_Finger,Strength_Ratio_Hand)
+                              'TJROM'= Results$TJROM,
+                              Operational_Pain,
+                              Strength_ratio_Finger,
+                              Strength_Ratio_Hand,
+                              'Grip Strength'=Max_Strength_Hand_Operated,
+                              'Pinch Strength'=Max_Strength_Finger_Operated
+                              )
 
 Formated_control = subset(Formated_results, Formated_results$Patient_N. %in% CaseN0$Listcontrol)
 Formated_test = subset(Formated_results,Formated_results$Patient_N. %in% CaseN0$Listtest)
 
 View(Formated_results)
-rm(Formated_results)
+#rm(Formated_results)
 
 write.csv2(Formated_control,file = "Formated Control.csv", row.names = FALSE)
 write.csv2(Formated_test,file = "Formated Test.csv", row.names = FALSE)
